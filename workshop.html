@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Step Academy</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        color: #333;
+        scroll-behavior: smooth; /* Smooth scrolling */
+      }
+
+      /* Header Styling */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px 20px;
+        background: linear-gradient(90deg, #0072ff, #00c6ff);
+        color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        transition: padding 0.3s ease, background-color 0.3s ease;
+        z-index: 1000;
+      }
+
+      .header.shrink {
+        padding: 10px 20px;
+        background: linear-gradient(90deg, #0052cc, #0072ff);
+      }
+
+      .logo img {
+        height: 100px;
+        transition: height 0.3s ease;
+      }
+
+      .header.shrink .logo img {
+        height: 70px;
+      }
+
+      .nav {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        flex-grow: 1;
+        justify-content: center;
+      }
+
+      /* Updated Navigation Links with Frame and Hover Effect */
+      .nav a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+        padding: 10px 15px;
+        border: 2px solid transparent;
+        border-radius: 8px;
+      }
+
+      .nav a:hover {
+        color: #f0e130;
+        transform: scale(1.1);
+        background-color: rgba(255, 255, 255, 0.2);
+        border-color: #f0e130;
+      }
+
+      /* Home Section Styling */
+      .home-content {
+    
+        background-size: cover;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 100px 20px;
+        align-items: center;
+        background-color: #ffffff;
+        border-radius: 8px;
+        margin: 40px 0;
+        position: relative;
+      }
+
+      .home-content .text-content {
+        text-align: left;
+        max-width: 600px;
+      }
+
+      .home-content .text-content h2 {
+        font-size: 2.5rem;
+        color: #0072ff;
+        margin-bottom: 20px;
+      }
+
+      .home-content .text-content p {
+        font-size: 1.1rem;
+        color: #666;
+        line-height: 1.6;
+      }
+
+      .home-content .image-content {
+        position: relative;
+      }
+
+      .home-content .image-content img {
+        width: 100%;
+        border-radius: 8px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .home-content .image-content:hover img {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .home-content .image-content::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 114, 255, 0.2);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 8px;
+      }
+
+      .home-content .image-content:hover::before {
+        opacity: 1;
+      }
+
+      /* Floating Welcome Block */
+      .floating-welcome {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 114, 255, 0.8);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transform: scale(0.9);
+        opacity: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 1001;
+      }
+
+      .home-content:hover .floating-welcome {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      /* Services Section Styling */
+      .services-section {
+        padding: 100px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        background-color: #f9f9f9;
+        margin: 40px 0;
+        border-radius: 8px;
+      }
+
+      .services {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+      }
+
+      .service-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 280px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .service-card img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+
+      .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .service-card h3 {
+        font-size: 1.5rem;
+        color: #0072ff;
+        margin-bottom: 10px;
+      }
+
+      .service-card p {
+        font-size: 1rem;
+        color: #666;
+      }
+
+      .service-card .btn {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #0072ff;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+      }
+
+      .service-card .btn:hover {
+        background-color: orange;
+      }
+
+      /* Contact Section Styling */
+      .contact-section {
+        padding: 100px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        background-color: #f9f9f9;
+        margin: 40px 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .contact-section h2 {
+        font-size: 2.5rem;
+        color: #0072ff;
+        margin-bottom: 20px;
+      }
+
+      .contact-section p {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 20px;
+      }
+
+      .contact-links a {
+        display: inline-block;
+        margin: 0 15px;
+        text-decoration: none;
+        color: #0072ff;
+        font-size: 1.5rem;
+        transition: color 0.3s ease;
+      }
+
+      .contact-links a:hover {
+        color: orange;
+      }
+
+      /* Footer Section Styling */
+      .footer {
+        background: linear-gradient(90deg, #6a0dad, #8a2be2);
+        color: white;
+        padding: 20px;
+        text-align: center;
+        margin-top: auto;
+        box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .footer a {
+        color: white;
+        text-decoration: none;
+        margin: 0 10px;
+        transition: color 0.3s ease;
+      }
+
+      .footer a:hover {
+        color: #f0e130;
+        text-decoration: underline;
+      }
+
+      /* Modal Styling */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1001;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        width: 350px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        position: relative;
+        transform: scale(0.9);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+
+      .modal.show .modal-content {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      .modal-content input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .modal-content button {
+        padding: 10px 20px;
+        background-color: #0072ff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .modal-content button:hover {
+        background-color: orange;
+        transform: scale(1.05);
+      }
+
+      .close-btn {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .close-btn:hover {
+        color: black;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .header .nav {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .home-content {
+          padding: 80px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header class="header">
+      <div class="logo">
+        <img src="logo.png" alt="Logo" />
+      </div>
+      <nav class="nav">
+        <a href="index.html.html">Home</a>
+        <a href="index.html.html">Services</a>
+        <a href="index.html.html">Contact</a>
+      </nav>
+    </header>
+
+    <!-- Content Section -->
+    <section class="home-content">
+      <div class="text-content">
+      
+      </div>
+      <div class="image-content">
+        
+      </div>
+      <!-- Floating Welcome Block -->
+      <div class="floating-welcome">
+        Welcome to Step Academy
+      </div>
+    </section>
+
+   
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+      <h2>Contact Us</h2>
+      <p>
+        Reach out to us via WhatsApp or Facebook for any inquiries or support.
+      </p>
+      <div class="contact-links">
+        <a href="https://wa.me/+201022383001" target="_blank" title="Chat with us on WhatsApp">
+          <img src="https://th.bing.com/th/id/OIP.eT0glXpm_YC_ySAkwalMiAHaHc?rs=1&pid=ImgDetMai" alt="WhatsApp" width="50" height="50" />
+        </a>
+        <a href="https://www.facebook.com/stepacademy2022" target="_blank" title="Follow us on Facebook">
+          <img src="https://static.vecteezy.com/system/resources/previews/020/964/386/original/facebook-circle-icon-for-web-design-free-png.png" alt="Facebook" width="50" height="50" />
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <p>&copy; 2024 Step Academy. All rights reserved.</p>
+ 
+    </footer>
+
+    <!-- JavaScript for Header Shrink Effect -->
+    <script>
+      window.addEventListener('scroll', function() {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 50) {
+          header.classList.add('shrink');
+        } else {
+          header.classList.remove('shrink');
+        }
+      });
+    </script>
+  </body>
+</html>

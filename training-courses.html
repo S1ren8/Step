@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Step Academy</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        color: #333;
+        scroll-behavior: smooth;
+      }
+
+      /* Header Styling */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px 20px;
+        background: linear-gradient(90deg, #0072ff, #00c6ff);
+        color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        transition: padding 0.3s ease, background-color 0.3s ease;
+        z-index: 1000;
+      }
+
+      .header.shrink {
+        padding: 10px 20px;
+        background: linear-gradient(90deg, #0052cc, #0072ff);
+      }
+
+      .logo img {
+        height: 100px;
+        transition: height 0.3s ease;
+      }
+
+      .header.shrink .logo img {
+        height: 70px;
+      }
+
+      .nav {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        flex-grow: 1;
+        justify-content: center;
+      }
+
+      .nav a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+        padding: 10px 15px;
+        border: 2px solid transparent;
+        border-radius: 8px;
+      }
+
+      .nav a:hover {
+        color: #f0e130;
+        transform: scale(1.1);
+        background-color: rgba(255, 255, 255, 0.2);
+        border-color: #f0e130;
+      }
+
+      /* Home Section Styling */
+      .home-content {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr; /* Adjust to give the image more space */
+        gap: 20px;
+        padding: 150px 20px;
+        align-items: center;
+        background-color: #ffffff;
+        border-radius: 8px;
+        margin: 40px 0;
+      }
+
+      .home-content .text-content {
+        text-align: left;
+        max-width: 600px;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .home-content .text-content h2 {
+        font-size: 2rem;
+        color: #0072ff;
+        margin-bottom: 15px;
+      }
+
+      .home-content .text-content p {
+        font-size: 1rem;
+        color: #666;
+        line-height: 1.6;
+      }
+
+      .home-content .image-content {
+        position: relative;
+        opacity: 0; /* Initially hidden */
+        transform: translateY(50px);
+        transition: opacity 1s ease, transform 1s ease;
+        text-align: center;
+      }
+
+      .home-content .image-content img {
+        width: 100%; /* Bigger image */
+        border-radius: 8px;
+        max-width: 700px; /* Limit max width */
+      }
+
+      /* Floating Welcome Block */
+      .floating-welcome {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 114, 255, 0.8);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transform: scale(0.9);
+        opacity: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 1001;
+      }
+
+      .home-content:hover .floating-welcome {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      /* Fading animation */
+      .fade-in {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+      }
+
+      /* Footer Styling */
+      .footer {
+        background-color: #0072ff;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        margin-top: auto; /* Push footer to the bottom */
+      }
+
+      .footer a {
+        color: white;
+        text-decoration: none;
+        padding: 0 10px;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* Contact Section Styling */
+      .contact-section {
+        padding: 50px 20px;
+        text-align: center;
+        background-color: #f9f9f9;
+        margin: 40px 0;
+        border-radius: 8px;
+      }
+
+      .contact-section h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #0072ff;
+      }
+
+      .contact-section p {
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+        color: #666;
+      }
+
+      .contact-links a {
+        display: inline-block;
+        margin: 0 15px;
+        padding: 10px;
+        text-decoration: none;
+      }
+
+      .contact-links img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .home-content {
+          grid-template-columns: 1fr; /* Revert to single column on smaller screens */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header class="header">
+      <div class="logo">
+        <img src="logo.png" alt="Logo" />
+      </div>
+      <nav class="nav">
+        <a href="index.html.html">Home</a>
+        <a href="index.html.html">Services</a>
+        <a href="index.html.html">Contact</a>
+      </nav>
+    </header>
+
+    <!-- Content Section with Photos and Text -->
+    <section class="home-content">
+      <div class="text-content">
+        <h2>Welcome to Step Academy</h2>
+        <p>We offer a range of services designed to help students achieve their educational goals. Our team of experts is dedicated to providing personalized support.</p>
+      </div>
+      <div class="image-content">
+        <img src="images/Robiticsnew.jpg" alt="Education Image 1" />
+      </div>
+    </section>
+
+    <section class="home-content">
+      <div class="text-content">
+        <h2>Our Vision</h2>
+        <p>At Step Academy, we envision a future where education is accessible to all. We provide online courses that are flexible, affordable, and tailored to meet the needs of every learner.</p>
+      </div>
+      <div class="image-content">
+        <img src="images/Electronics.jpg" alt="Education Image 2" />
+      </div>
+    </section>
+
+    <section class="home-content">
+      <div class="text-content">
+        <h2>Our Mission</h2>
+        <p>Step Academy strives to empower students by giving them the tools and resources they need to succeed in their academic journey.</p>
+      </div>
+      <div class="image-content">
+        <img src="images/PLC.jpg" alt="Education Image 3" />
+      </div>
+    </section>
+
+    <section class="home-content">
+      <div class="text-content">
+        <h2>Why Choose Us</h2>
+        <p>We offer a supportive and engaging learning environment, with access to a wide variety of resources that cater to different learning styles.</p>
+      </div>
+      <div class="image-content">
+        <img src="images/PCB.jpg" alt="Education Image 4" />
+      </div>
+    </section>
+
+    <section class="home-content">
+      <div class="text-content">
+        <h2>Programs</h2>
+        <p>Our programs are designed to cover a wide range of subjects, ensuring that there is something for everyone. Whether you’re looking to improve your skills or start a new career, we’ve got you covered.</p>
+      </div>
+      <div class="image-content">
+        <img src="images/Classic.jpg" alt="Education Image 5" />
+      </div>
+    </section>
+
+    <section class="home-content">
+      <div class="text-content">
+        <h2>Join Us Today</h2>
+        <p>Become part of a community that values education, growth, and success. Contact us to learn more about how we can help you achieve your academic goals.</p>
+      </div>
+      <div class="image-content">
+        <img src="images/Arduino.jpg" alt="Education Image 6" />
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <h2>Contact Us</h2>
+      <p>Get in touch with us to learn more about our services and how we can help you achieve your academic goals.</p>
+      <div class="contact-links">
+        <a href="https://wa.me/+201022383001"><img src="https://th.bing.com/th/id/OIP.eT0glXpm_YC_ySAkwalMiAHaHc?rs=1&pid=ImgDetMai" alt="WhatsApp" /></a>
+        <a href="https://www.facebook.com/stepacademy2022"><img src="https://static.vecteezy.com/system/resources/previews/020/964/386/original/facebook-circle-icon-for-web-design-free-png.png" alt="Facebook" /></a>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <p>&copy; 2024 Step Academy. All rights reserved.</p>
+      <p>
+      
+      </p>
+    </footer>
+
+    <!-- JavaScript to Handle Scroll Animation -->
+    <script>
+      function checkPosition() {
+        const imageContents = document.querySelectorAll('.image-content');
+        imageContents.forEach((content) => {
+          const rect = content.getBoundingClientRect();
+          if (rect.top <= window.innerHeight && rect.bottom >= 0) {
+            content.classList.add('fade-in');
+          } else {
+            content.classList.remove('fade-in'); // Remove class to allow repeating fade effect
+          }
+        });
+      }
+
+      window.addEventListener('scroll', checkPosition);
+      window.addEventListener('load', checkPosition);
+    </script>
+  </body>
+</html>
